@@ -1,5 +1,6 @@
 package guru.springframework.spring6restmvc.controllers;
 
+import guru.springframework.spring6restmvc.model.Beer;
 import guru.springframework.spring6restmvc.model.Customer;
 import guru.springframework.spring6restmvc.services.CustomerService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,11 @@ import java.util.UUID;
 public class CustomerController {
     private final CustomerService customerService;
 
+    @PutMapping("/{customerId}")
+    public ResponseEntity<Customer> updateBeer(@PathVariable("customerId") UUID id, @RequestBody Customer customer){
+        customerService.updateCustomerById(id, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
     @PostMapping
     public ResponseEntity<Customer> handlePost(@RequestBody Customer customer){
         Customer savedCustomer = customerService.saveCustomer(customer);

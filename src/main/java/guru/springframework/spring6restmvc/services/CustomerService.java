@@ -10,4 +10,6 @@ public interface CustomerService {
     List<Customer> getAllCustomers();
 
     Customer saveCustomer(Customer customer);
+
+    void updateCustomerById(UUID id, Customer customer);
 }
