@@ -45,4 +45,17 @@ public class CustomerImpl implements CustomerService{
     public List<Customer> getAllCustomers() {
         return new ArrayList<>(customers.values());
     }
+
+    @Override
+    public Customer saveCustomer(Customer customer) {
+        Customer savedCustomer = Customer.builder()
+                .id(UUID.randomUUID())
+                .createdDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .name(customer.getName())
+                .version(customer.getVersion())
+                .build();
+        customers.put(savedCustomer.getId(), savedCustomer);
+        return savedCustomer;
+    }
 }
