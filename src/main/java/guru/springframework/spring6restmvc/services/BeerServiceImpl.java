@@ -89,6 +89,11 @@ public class BeerServiceImpl implements BeerService{
     }
 
     @Override
+    public void deleteBeerById(UUID id) {
+        beers.remove(id);
+    }
+
+    @Override
     public Beer getBeerById(UUID id) {
         log.debug("Getting beer in beer service impl with id " + id);
         return beers.get(id);
