@@ -2,7 +2,6 @@ package guru.springframework.spring6restmvc.controllers;
 
 import guru.springframework.spring6restmvc.model.Customer;
 import guru.springframework.spring6restmvc.services.CustomerService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,38 +12,40 @@ import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/customers")
 @RestController
 public class CustomerController {
+
+    public static final String CUSTOMER_PATH = "/api/v1/customers";
+    public static final String CUSTOMER_PATH_ID = "/api/v1/customers/{customerId}";
     private final CustomerService customerService;
 
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping(CUSTOMER_PATH_ID)
     public ResponseEntity<Customer> deleteCustomer(@PathVariable("customerId") UUID id){
         customerService.deleteCustomerById(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    @PatchMapping("/{customerId}")
+    @PatchMapping(CUSTOMER_PATH_ID)
     public ResponseEntity<Customer> patchCustomer(@PathVariable("customerId") UUID id, @RequestBody Customer customer){
         customerService.patchCustomerById(id, customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    @PutMapping("/{customerId}")
+    @PutMapping(CUSTOMER_PATH_ID)
     public ResponseEntity<Customer> updateCustomer(@PathVariable("customerId") UUID id, @RequestBody Customer customer){
         customerService.updateCustomerById(id, customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    @PostMapping
+    @PostMapping(CUSTOMER_PATH)
     public ResponseEntity<Customer> handlePost(@RequestBody Customer customer){
         Customer savedCustomer = customerService.saveCustomer(customer);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/customers/" + savedCustomer.getId());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
-    @GetMapping("/{customerId}")
+    @GetMapping(CUSTOMER_PATH_ID)
     public Customer getById(@PathVariable("customerId") UUID id){
         return customerService.getCustomerById(id);
     }
-    @GetMapping
+    @GetMapping(CUSTOMER_PATH)
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
