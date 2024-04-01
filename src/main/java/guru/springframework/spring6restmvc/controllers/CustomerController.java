@@ -1,6 +1,6 @@
 package guru.springframework.spring6restmvc.controllers;
 
-import guru.springframework.spring6restmvc.model.Customer;
+import guru.springframework.spring6restmvc.model.CustomerDTO;
 import guru.springframework.spring6restmvc.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -20,33 +20,33 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @DeleteMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable("customerId") UUID id){
+    public ResponseEntity<CustomerDTO> deleteCustomer(@PathVariable("customerId") UUID id){
         customerService.deleteCustomerById(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
     @PatchMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity<Customer> patchCustomer(@PathVariable("customerId") UUID id, @RequestBody Customer customer){
+    public ResponseEntity<CustomerDTO> patchCustomer(@PathVariable("customerId") UUID id, @RequestBody CustomerDTO customer){
         customerService.patchCustomerById(id, customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
     @PutMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("customerId") UUID id, @RequestBody Customer customer){
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable("customerId") UUID id, @RequestBody CustomerDTO customer){
         customerService.updateCustomerById(id, customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
     @PostMapping(CUSTOMER_PATH)
-    public ResponseEntity<Customer> handlePost(@RequestBody Customer customer){
-        Customer savedCustomer = customerService.saveCustomer(customer);
+    public ResponseEntity<CustomerDTO> handlePost(@RequestBody CustomerDTO customer){
+        CustomerDTO savedCustomer = customerService.saveCustomer(customer);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/customers/" + savedCustomer.getId());
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
     @GetMapping(CUSTOMER_PATH_ID)
-    public Customer getById(@PathVariable("customerId") UUID id){
+    public CustomerDTO getById(@PathVariable("customerId") UUID id){
         return customerService.getCustomerById(id).orElseThrow(() -> new NotFoundException());
     }
     @GetMapping(CUSTOMER_PATH)
-    public List<Customer> getAllCustomers(){
+    public List<CustomerDTO> getAllCustomers(){
         return customerService.getAllCustomers();
     }
 }
