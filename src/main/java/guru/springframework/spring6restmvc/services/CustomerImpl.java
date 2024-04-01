@@ -38,8 +38,8 @@ public class CustomerImpl implements CustomerService{
         customers.put(customer3.getId(), customer3);
     }
     @Override
-    public Customer getCustomerById(UUID id) {
-        return customers.get(id);
+    public Optional<Customer> getCustomerById(UUID id) {
+        return Optional.of(customers.get(id));
     }
 
     @Override
