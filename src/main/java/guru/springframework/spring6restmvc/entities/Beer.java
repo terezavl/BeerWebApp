@@ -1,16 +1,19 @@
 package guru.springframework.spring6restmvc.entities;
 
 import guru.springframework.spring6restmvc.model.BeerStyle;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+@Getter
+@Setter
+@Builder
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Beer {
     @Id
     @GeneratedValue(generator = "UUID")

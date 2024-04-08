@@ -1,4 +1,4 @@
-package guru.springframework.spring6restmvc;
+package guru.springframework.spring6restmvc.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.spring6restmvc.controllers.CustomerController;
