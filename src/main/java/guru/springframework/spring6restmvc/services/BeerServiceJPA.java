@@ -7,12 +7,12 @@ import guru.springframework.spring6restmvc.repositories.BeerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -67,7 +67,28 @@ public class BeerServiceJPA implements BeerService {
     }
 
     @Override
-    public void patchBeerById(UUID id, BeerDTO beer) {
-
+    public Optional<BeerDTO> patchBeerById(UUID id, BeerDTO beer) {
+        Optional<Beer> optional = beerRepository.findById(id);
+        if(optional.isPresent()){
+            Beer existingBeer = optional.get();
+            if(StringUtils.hasText(beer.getBeerName())) {
+                existingBeer.setBeerName(beer.getBeerName());
+            }
+            if(StringUtils.hasText(beer.getUpc())) {
+                existingBeer.setUpc(beer.getUpc());
+            }
+            if(beer.getBeerStyle() != null) {
+                existingBeer.setBeerStyle(beer.getBeerStyle());
+            }
+            if(beer.getPrice() != null) {
+                existingBeer.setPrice(beer.getPrice());
+            }
+            if(beer.getQuantityOnHand() != null) {
+                existingBeer.setQuantityOnHand(beer.getQuantityOnHand());
+            }
+            existingBeer.setUpdateDate(LocalDateTime.now());
+            return Optional.of(beerMapper.beerToDto(existingBeer));
+        }
+        return Optional.empty();
     }
 }
