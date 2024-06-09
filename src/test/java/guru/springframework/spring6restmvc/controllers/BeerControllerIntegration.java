@@ -130,7 +130,7 @@ public class BeerControllerIntegration {
     public void getAllBeers(){
         List<BeerDTO> listBeers = beerController.listBeers();
 
-        assertThat(listBeers.size()).isEqualTo(3);
+        assertThat(listBeers.size()).isEqualTo(2413);
     }
 
     @Transactional
